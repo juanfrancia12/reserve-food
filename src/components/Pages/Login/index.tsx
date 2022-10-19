@@ -1,7 +1,7 @@
 type Props = {};
 
-const Login = (props: Props) => {
-  return <div className="text-2xl font-bold text-red-700">Login</div>;
+const LoginPage = (props: Props) => {
+  return <div className="text-2xl font-bold text-red-700">LoginPage</div>;
 };
 
-export default Login;
+export default LoginPage;
