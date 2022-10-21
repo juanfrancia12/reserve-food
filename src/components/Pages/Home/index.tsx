@@ -1,7 +1,7 @@
-type Props = {};
+type Props = {}
 
 const Home = (props: Props) => {
-  return <div>HOME PRIVATE</div>;
-};
+  return <div>HOME PRIVATE</div>
+}
 
-export default Home;
+export default Home

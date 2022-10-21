@@ -1,5 +1,5 @@
-import { Navigate, Route, Routes } from "react-router-dom";
-import Login from "../Pages/Login";
+import { Navigate, Route, Routes } from "react-router-dom"
+import Login from "../Pages/Login"
 
 export const PublicRoutes = () => {
   return (
@@ -7,5 +7,5 @@ export const PublicRoutes = () => {
       <Route path="login" element={<Login />} />
       <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>
-  );
-};
+  )
+}

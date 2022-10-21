@@ -1,20 +1,20 @@
-import { PrivateRoutes } from "./PrivateRoutes";
-import { PublicRoutes } from "./PublicRoutes";
+import { PrivateRoutes } from "./PrivateRoutes"
+import { PublicRoutes } from "./PublicRoutes"
 
 import {
   BrowserRouter as Router,
   Navigate,
   Route,
   Routes,
-} from "react-router-dom";
-import Loading from "../Elements/Loading";
+} from "react-router-dom"
+import Loading from "../Elements/Loading"
 
-type Status = "checking" | "authenticated" | "no-authenticated";
+type Status = "checking" | "authenticated" | "no-authenticated"
 
-let status: Status = "checking";
+let status: Status = "checking"
 
 export const AppRoutes = () => {
-  if (status === "checking") return <Loading />;
+  if (status === "checking") return <Loading />
 
   return (
     <Router>
@@ -31,5 +31,5 @@ export const AppRoutes = () => {
         </div>
       </div>
     </Router>
-  );
-};
+  )
+}
