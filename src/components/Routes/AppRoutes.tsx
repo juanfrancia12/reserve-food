@@ -203,7 +203,7 @@ const Login = () => {
           </div>
           <div className="m-auto ">
             <GoogleLogin
-              clientId="1056012931140-92mjikpnru3qg407bjr4u5jugoid992e.apps.googleusercontent.com"
+              clientId="1056012931140-hf6npofjt486maof685c4peg6rq70qjh.apps.googleusercontent.com"
               buttonText="CONTINUAR CON GOOGLE"
               onSuccess={responseGoogle}
               onFailure={responseGoogle}
