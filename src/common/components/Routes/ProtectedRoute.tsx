@@ -1,14 +1,16 @@
 import { Navigate, Outlet } from "react-router-dom"
 
 type Props = {
-  isAllowed: any
-  redirectTo?: any
+  isAllowed: boolean
+  redirectTo?: string
   children?: any
 }
 
+// JSX.Element | JSX.Element[]
+
 export const ProtectedRoute = ({
   isAllowed,
-  redirectTo = "/landing",
+  redirectTo = "/login",
   children,
 }: Props) => {
   if (!isAllowed) {
