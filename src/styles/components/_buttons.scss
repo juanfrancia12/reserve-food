@@ -1,0 +1,12 @@
+// TODO: BUTTONS CLASSES
+
+.button {
+  @apply rounded-md px-5 py-3 text-center transition-colors duration-300 bg-primary-300 text-gray-100 font-semibold cursor-pointer hover:bg-primary-400;
+
+  // &-primary {
+  //   @apply text-sm_primary-700 border border-sm_primary-700 hover:bg-sm_primary-100/[0.9];
+  // }
+  // &-secondary {
+  //   @apply text-sm_grey-600 bg-sm_primary-700 hover:bg-sm_primary-800/[0.9];
+  // }
+}

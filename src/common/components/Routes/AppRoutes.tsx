@@ -1,4 +1,7 @@
+import { ProtectedRoute } from "./ProtectedRoute"
 import UNAC_OBU from "@assets/UNAC-OBU.webp"
+import { lazy, Suspense, useState } from "react"
+import { GoogleLogin } from "react-google-login"
 import {
   isUser,
   isUser_food_create,
@@ -7,15 +10,12 @@ import {
   isUser_professor,
   isUser_student,
 } from "@data/user"
-import { lazy, Suspense, useState } from "react"
-import { GoogleLogin } from "react-google-login"
 import {
   BrowserRouter as Router,
   Navigate,
   Route,
   Routes,
 } from "react-router-dom"
-import { ProtectedRoute } from "./ProtectedRoute"
 
 const Layout = lazy(() => import("@components/templates/layout"))
 const AppPreviewPage = lazy(() => import("@pages/AppPreview"))
@@ -30,87 +30,111 @@ const ReservePage = lazy(() => import("@pages/Reserve"))
 export function AppRoutes() {
   return (
     <Router>
-      <Layout>
-        <Suspense fallback={<div>CARGANDO ....</div>}>
-          <Routes>
-            // ??? RUTAS PUBLICAS
-            <Route index element={<div>Landing Page (Public)</div>} />
-            <Route path="/app-preview" element={<AppPreviewPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/search" element={<SearchPage />} />
-            <Route path="/reserve" element={<ReservePage />} />
-            <Route path="/error-404" element={<Error404 />} />
-            <Route path="/error-403" element={<UnauthorizedPage />} />
-            // ??? RUTAS PRIVADAS PARA TODOS LOS USUARIOS
-            <Route element={<ProtectedRoute isAllowed={isUser} />}>
-              <Route path="/home" element={<HomePage />} />
+      <Suspense fallback={<AppPreviewPage />}>
+        <Layout>
+          <Suspense fallback={<div>CARGANDO ....</div>}>
+            <Routes>
+              // ??? RUTAS PUBLICAS
+              {/* <Route index element={<div>Landing Page (Public)</div>} /> */}
+              <Route index element={<HomePage />} />
+              <Route path="/app-preview" element={<AppPreviewPage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/search" element={<SearchPage />} />
+              <Route path="/reserve" element={<ReservePage />} />
+              <Route path="/error-404" element={<Error404 />} />
+              <Route path="/error-403" element={<UnauthorizedPage />} />
+              // ??? RUTAS PRIVADAS PARA TODOS LOS USUARIOS
+              <Route element={<ProtectedRoute isAllowed={isUser} />}>
+                {/* <Route path="/home" element={<HomePage />} /> */}
+                <Route path="/profile" element={<div>PROFILE PAGE</div>} />
+                <Route
+                  path="/history"
+                  element={<div>HISTORIAS DEL USUARIO PAGE</div>}
+                />
+                <Route
+                  path="/suggestions"
+                  element={
+                    <div>TODAS LAS SUGERENCIAS DEL ESTUDIANTE O DOCENTE</div>
+                  }
+                />
+                <Route
+                  path="/dashboard"
+                  element={<div>Dashboard (Private)</div>}
+                />
+              </Route>
+              // ??? RUTAS PRIVADAS DE ACUERDO AL PERMISO DEL USUARIO
               <Route
-                path="/dashboard"
-                element={<div>Dashboard (Private)</div>}
+                path="/food/create"
+                element={
+                  <ProtectedRoute
+                    redirectTo="/home"
+                    isAllowed={isUser_food_create}
+                  >
+                    <div className="">
+                      USUARIO (Private & permission 'crear')
+                    </div>
+                  </ProtectedRoute>
+                }
               />
-            </Route>
-            // ??? RUTAS PRIVADAS DE ACUERDO AL PERMISO DEL USUARIO
-            <Route
-              path="/food/create"
-              element={
-                <ProtectedRoute
-                  redirectTo="/home"
-                  isAllowed={isUser_food_create}
-                >
-                  <div className="">USUARIO (Private & permission 'crear')</div>
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/food/edit"
-              element={
-                <ProtectedRoute redirectTo="/home" isAllowed={isUser_food_edit}>
-                  <div className="">
-                    Profile (Private & permission 'editar')
-                  </div>
-                </ProtectedRoute>
-              }
-            />
-            // ??? RUTAS PRIVADAS DE ACUERDO AL ROL DEL USUARIO
-            <Route
-              path="/admin"
-              element={
-                <ProtectedRoute redirectTo="/home" isAllowed={isUser_student}>
-                  <div className="">
-                    Admin (Private & permission 'estudiante')
-                  </div>
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin"
-              element={
-                <ProtectedRoute redirectTo="/home" isAllowed={isUser_professor}>
-                  <div className="">Admin (Private & permission 'docente')</div>
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin"
-              element={
-                <ProtectedRoute
-                  redirectTo="/home"
-                  isAllowed={isUser_obu_manager}
-                >
-                  <div className="">
-                    Admin (Private & permission 'encargado-obu')
-                  </div>
-                </ProtectedRoute>
-              }
-            />
-            {/* <Route path="*" element={<Navigate to="/login" replace />} /> */}
-            // ??? RUTA PUBLICA
-            <Route path="/404" element={<Error404 />} />
-            <Route path="*" element={<Navigate to={"/404"} replace />} />
-          </Routes>
-        </Suspense>
-      </Layout>
+              <Route
+                path="/food/edit"
+                element={
+                  <ProtectedRoute
+                    redirectTo="/home"
+                    isAllowed={isUser_food_edit}
+                  >
+                    <div className="">
+                      Profile (Private & permission 'editar')
+                    </div>
+                  </ProtectedRoute>
+                }
+              />
+              // ??? RUTAS PRIVADAS DE ACUERDO AL ROL DEL USUARIO
+              <Route
+                path="/admin"
+                element={
+                  <ProtectedRoute redirectTo="/home" isAllowed={isUser_student}>
+                    <div className="">
+                      Admin (Private & permission 'estudiante')
+                    </div>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin"
+                element={
+                  <ProtectedRoute
+                    redirectTo="/home"
+                    isAllowed={isUser_professor}
+                  >
+                    <div className="">
+                      Admin (Private & permission 'docente')
+                    </div>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin"
+                element={
+                  <ProtectedRoute
+                    redirectTo="/home"
+                    isAllowed={isUser_obu_manager}
+                  >
+                    <div className="">
+                      Admin (Private & permission 'encargado-obu')
+                    </div>
+                  </ProtectedRoute>
+                }
+              />
+              {/* <Route path="*" element={<Navigate to="/login" replace />} /> */}
+              // ??? RUTA PUBLICA
+              <Route path="/404" element={<Error404 />} />
+              <Route path="*" element={<Navigate to={"/404"} replace />} />
+            </Routes>
+          </Suspense>
+        </Layout>
+      </Suspense>
     </Router>
   )
 }

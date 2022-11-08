@@ -48,7 +48,7 @@ export const USER_OBU_MANAGER_PERMISSIONS: USERTYPE = {
   roles: ["obu-manager"],
 }
 
-export const DATA_USER_BACKEND = USER
+export const DATA_USER_BACKEND: any = USER
 
 // *** VERIFICAR TIPO DE USUARIO
 
@@ -82,6 +82,9 @@ export const isUser_food_update =
   isUser &&
   isUser_obu_manager &&
   DATA_USER_BACKEND.permissions.includes("food-update")
+
+export const LoginHandle = () => isUser
+export const LogoutHandle = () => null
 
 // export const USER_ANALYTICS: USERTYPE = {
 //   id: 1,
